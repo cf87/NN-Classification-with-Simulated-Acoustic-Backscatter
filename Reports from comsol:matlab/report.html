@@ -1,0 +1,1916 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="COMSOL Multiphysics model report" />
+    <meta name="keywords" content="comsol multiphysics model report" />
+    <!-- saved from url=(0014)about:internet -->
+    <title>report</title>
+    <link rel="stylesheet" href="report_files/report.css" type="text/css" media="screen" />
+  </head>
+  <body>
+    <div>
+      <a href="http://www.comsol.com">
+        <img src="report_files/logo.png" width="159" height="34" style="float:right;border:none" />
+      </a>
+    </div>
+    <div class="ReportTitle" id="cs6601825">
+       <span>2D Underwater acoustic response from a rough two layer seafloor</span>
+    </div>
+    <p>
+      <img src="report_files/titleimage.png" alt="titleimage.png" width="288" height="230" style="border:none" />
+    </p>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Author</span>
+        </td>
+        <td>
+           <span>Christina Frederick</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Report date</span>
+        </td>
+        <td>
+           <span>Aug 27, 2018 1:45:29 PM</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Company</span>
+        </td>
+        <td>
+           <span>NJIT</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs3023633">
+       <span>Summary</span>
+    </h3>
+    <p>
+      <a name="cs5879801">
+         <span>Forward model in COMSOL used to generate Helmholtz Solutions</span>
+      </a>
+    </p>
+    <h2 id="cs5058860">
+      <a name="cs7988914">
+         <span>1. Global Definitions</span>
+      </a>
+    </h2>
+    <table border="1">
+      <caption>
+        <a name="cs8058869">
+           <span>Global settings</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Version</span>
+        </td>
+        <td>
+           <span>COMSOL Multiphysics 5.3a (Build: 229)</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs1428740">
+           <span>Used products</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>COMSOL Multiphysics</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Acoustics Module</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs6006473">
+      <a name="cs1856504">
+         <span>1.1. Parameters 1</span>
+      </a>
+    </h3>
+    <table border="1">
+      <caption>
+        <a name="cs7575983">
+           <span>Parameters</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Name</span>
+        </th>
+        <th>
+           <span>Expression</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+        <th>
+           <span>Description</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>width</span>
+        </td>
+        <td>
+           <span>20*lambda_min</span>
+        </td>
+        <td>
+           <span>2 m</span>
+        </td>
+        <td>
+           <span>Width of template domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>height</span>
+        </td>
+        <td>
+           <span>1.5</span>
+        </td>
+        <td>
+           <span>1.5</span>
+        </td>
+        <td>
+           <span>Height of template domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>f0</span>
+        </td>
+        <td>
+           <span>10*1.5[kHz]</span>
+        </td>
+        <td>
+           <span>15000 Hz</span>
+        </td>
+        <td>
+           <span>Sonar frequency</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Hpml</span>
+        </td>
+        <td>
+           <span>2*lambda_min</span>
+        </td>
+        <td>
+           <span>0.2 m</span>
+        </td>
+        <td>
+           <span>PML size</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>lambda_min</span>
+        </td>
+        <td>
+           <span>c_w/f0</span>
+        </td>
+        <td>
+           <span>0.1 m</span>
+        </td>
+        <td>
+           <span>Minimal wavelength</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>alpha</span>
+        </td>
+        <td>
+           <span>10[dB/(m)]</span>
+        </td>
+        <td>
+           <span>10 dB/m</span>
+        </td>
+        <td>
+           <span>Attenuation</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Hsediment</span>
+        </td>
+        <td>
+           <span>1.5</span>
+        </td>
+        <td>
+           <span>1.5</span>
+        </td>
+        <td>
+           <span>Height of sediment layer</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>L_x</span>
+        </td>
+        <td>
+           <span>width*2^9</span>
+        </td>
+        <td>
+           <span>1024 m</span>
+        </td>
+        <td>
+           <span>Number of samples in x direction</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>L_y</span>
+        </td>
+        <td>
+           <span>height*2^9</span>
+        </td>
+        <td>
+           <span>768</span>
+        </td>
+        <td>
+           <span>Number of samples in z direction</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>layer_thickness</span>
+        </td>
+        <td>
+           <span>.25</span>
+        </td>
+        <td>
+           <span>0.25</span>
+        </td>
+        <td>
+           <span>Top layer thickness</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>c_w</span>
+        </td>
+        <td>
+           <span>1500[m/s]</span>
+        </td>
+        <td>
+           <span>1500 m/s</span>
+        </td>
+        <td>
+           <span>Sound Speed in Water</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>rho_w</span>
+        </td>
+        <td>
+           <span>1000[kg/m^3]</span>
+        </td>
+        <td>
+           <span>1000 kg/m³</span>
+        </td>
+        <td>
+           <span>Density of water</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>c_delta</span>
+        </td>
+        <td>
+           <span>1</span>
+        </td>
+        <td>
+           <span>1</span>
+        </td>
+        <td>
+           <span>Sound speed multiplier</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>rho_delta</span>
+        </td>
+        <td>
+           <span>1</span>
+        </td>
+        <td>
+           <span>1</span>
+        </td>
+        <td>
+           <span>Density multiplier</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>theta</span>
+        </td>
+        <td>
+           <span>pi/2</span>
+        </td>
+        <td>
+           <span>1.5708</span>
+        </td>
+        <td>
+           <span>Incident angle</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs6105005">
+      <a name="cs5324266">
+         <span>1.2. Functions</span>
+      </a>
+    </h3>
+    <h4 id="cs8882640">
+      <a name="cs2357287">
+         <span>1.2.1. Interface 1</span>
+      </a>
+    </h4>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Function names</span>
+        </td>
+        <td>
+           <span>int1</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Function type</span>
+        </td>
+        <td>
+           <span>Interpolation</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <img src="report_files/func_int1.png" alt="func_int1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs6569175">
+         <span>Interface 1</span>
+      </a>
+    </p>
+    <h3 id="cs6388095">
+      <a name="cs3142407">
+         <span>1.3. Materials</span>
+      </a>
+    </h3>
+    <h4 id="cs4835833">
+      <a name="cs6776995">
+         <span>1.3.1. Water</span>
+      </a>
+    </h4>
+    <table border="1">
+      <caption>
+        <a name="cs7527092">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Dynamic viscosity</span>
+        </td>
+        <td>
+           <span>eta(T[1/K])[Pa*s]</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Ratio of specific heats</span>
+        </td>
+        <td>
+           <span>1.0</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Electrical conductivity</span>
+        </td>
+        <td>
+           <span>{{5.5e-6[S/m], 0, 0}, {0, 5.5e-6[S/m], 0}, {0, 0, 5.5e-6[S/m]}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Heat capacity at constant pressure</span>
+        </td>
+        <td>
+           <span>Cp(T[1/K])[J/(kg*K)]</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>rho(T[1/K])[kg/m^3]</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Thermal conductivity</span>
+        </td>
+        <td>
+           <span>{{k(T[1/K])[W/(m*K)], 0, 0}, {0, k(T[1/K])[W/(m*K)], 0}, {0, 0, k(T[1/K])[W/(m*K)]}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>cs(T[1/K])[m/s]</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs3066403">
+      <a name="cs7616534">
+         <span>1.3.2. Top Layer</span>
+      </a>
+    </h4>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Cases</span>
+        </td>
+        <td>
+           <span>Clay, Silt, Sand, Gravel</span>
+        </td>
+      </tr>
+    </table>
+    <h5 id="cs6461045">
+      <a name="cs2559844">
+         <span>Clay</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs4001290">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>1.5*rho_delta*rho_w</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>c_w*c_delta</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Porosity</span>
+        </td>
+        <td>
+           <span>70[%]</span>
+        </td>
+      </tr>
+    </table>
+    <h5 id="cs3382063">
+      <a name="cs9006024">
+         <span>Silt</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs8771111">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>1.05*c_w*c_delta</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>1.7*rho_delta*rho_w</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Permeability</span>
+        </td>
+        <td>
+           <span>{{10, 0, 0}, {0, 10, 0}, {0, 0, 10}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Porosity</span>
+        </td>
+        <td>
+           <span>55[%]</span>
+        </td>
+      </tr>
+    </table>
+    <h5 id="cs7220136">
+      <a name="cs4608471">
+         <span>Sand</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs5384423">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>1.1*c_w*c_delta</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>1.9*rho_delta*rho_w</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Permeability</span>
+        </td>
+        <td>
+           <span>{{10, 0, 0}, {0, 10, 0}, {0, 0, 10}}</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Porosity</span>
+        </td>
+        <td>
+           <span>45[%]</span>
+        </td>
+      </tr>
+    </table>
+    <h5 id="cs6195806">
+      <a name="cs6802081">
+         <span>Gravel</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs8136927">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>1.2*c_w*c_delta</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>2*rho_delta*rho_w</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Porosity</span>
+        </td>
+        <td>
+           <span>35[%]</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs2552150">
+      <a name="cs4916129">
+         <span>1.3.3. Bottom Layer</span>
+      </a>
+    </h4>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Cases</span>
+        </td>
+        <td>
+           <span>Basalt</span>
+        </td>
+      </tr>
+    </table>
+    <h5 id="cs4112101">
+      <a name="cs8187027">
+         <span>Basalt</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs1943212">
+           <span>Material parameters</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Name</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+        <th>
+           <span>Unit</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>2.7*rho_w</span>
+        </td>
+        <td>
+           <span>kg/m³</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>3.5*c_w</span>
+        </td>
+        <td>
+           <span>m/s</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs9835368">
+           <span>Basic Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>2.7*rho_w</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>3.5*c_w</span>
+        </td>
+      </tr>
+    </table>
+    <h2 id="cs6426282">
+      <a name="cs6288131">
+         <span>2. Component 1</span>
+      </a>
+    </h2>
+    <h3 id="cs7398571">
+      <a name="cs8290520">
+         <span>2.1. Definitions</span>
+      </a>
+    </h3>
+    <h4 id="cs7830971">
+      <a name="cs9582137">
+         <span>2.1.1. Domain Properties</span>
+      </a>
+    </h4>
+    <h5 id="cs2462545">
+      <a name="cs7659742">
+         <span>Perfectly Matched Layer 1</span>
+      </a>
+    </h5>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Tag</span>
+        </td>
+        <td>
+           <span>pml1</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs9690311">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Selection</span>
+        </td>
+        <td>
+           <span>Domain 5</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <img src="report_files/pml_pml1.png" alt="pml_pml1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs1274488">
+         <span>Selection</span>
+      </a>
+    </p>
+    <h5 id="cs9602687">
+      <a name="cs9381734">
+         <span>Perfectly Matched Layer 2</span>
+      </a>
+    </h5>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Tag</span>
+        </td>
+        <td>
+           <span>pml2</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs6583711">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Selection</span>
+        </td>
+        <td>
+           <span>Domain 1</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <img src="report_files/pml_pml2.png" alt="pml_pml2.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs6236002">
+         <span>Selection</span>
+      </a>
+    </p>
+    <h3 id="cs7312072">
+      <a name="cs6409396">
+         <span>2.2. Geometry 1</span>
+      </a>
+    </h3>
+    <p>
+      <img src="report_files/geom_geom1.png" alt="geom_geom1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs5527855">
+         <span>Geometry 1</span>
+      </a>
+    </p>
+    <table border="1">
+      <caption>
+        <a name="cs3320157">
+           <span>Units</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Length unit</span>
+        </td>
+        <td>
+           <span>m</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Angular unit</span>
+        </td>
+        <td>
+           <span>deg</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs8521673">
+      <a name="cs4114197">
+         <span>2.3. Pressure Acoustics, Frequency Domain</span>
+      </a>
+    </h3>
+    <h4 id="cs9221311">
+      <a name="cs5568954">
+         <span>2.3.1. Component Couplings</span>
+      </a>
+    </h4>
+    <h5 id="cs8705746">
+      <a name="cs3039394">
+         <span>Integration for Wavenumber</span>
+      </a>
+    </h5>
+    <table border="1">
+      <tr>
+        <td>
+           <span>Coupling type</span>
+        </td>
+        <td>
+           <span>Integration</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Operator name</span>
+        </td>
+        <td>
+           <span>intop1</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs3125347">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Point</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Selection</span>
+        </td>
+        <td>
+           <span>Point 11</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <img src="report_files/cpl_intop1.png" alt="cpl_intop1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs5390092">
+         <span>Selection</span>
+      </a>
+    </p>
+    <h4 id="cs5462609">
+      <a name="cs6039703">
+         <span>2.3.2. Variables</span>
+      </a>
+    </h4>
+    <h5 id="cs3218511">
+      <a name="cs8058726">
+         <span>Plane Wave</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs8745783">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Entire model</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <tr>
+        <th>
+           <span>Name</span>
+        </th>
+        <th>
+           <span>Expression</span>
+        </th>
+        <th>
+           <span>Unit</span>
+        </th>
+        <th>
+           <span>Description</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>kx_e</span>
+        </td>
+        <td>
+           <span>cos(pi/2 - theta)</span>
+        </td>
+        <td>
+           <span></span>
+        </td>
+        <td>
+           <span>Plane wave direction, x</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>ky_e</span>
+        </td>
+        <td>
+           <span>-sin(pi/2 - theta)</span>
+        </td>
+        <td>
+           <span></span>
+        </td>
+        <td>
+           <span>Plane wave direction, y</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>k0</span>
+        </td>
+        <td>
+           <span>intop1(acpr.k)</span>
+        </td>
+        <td>
+           <span>rad/m</span>
+        </td>
+        <td>
+           <span>Free-field wave number</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>kx</span>
+        </td>
+        <td>
+           <span>k0*kx_e</span>
+        </td>
+        <td>
+           <span>rad/m</span>
+        </td>
+        <td>
+           <span>Background plane wave k_x</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>ky</span>
+        </td>
+        <td>
+           <span>k0*ky_e</span>
+        </td>
+        <td>
+           <span>rad/m</span>
+        </td>
+        <td>
+           <span>Background plane wave k_y</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>p_inc</span>
+        </td>
+        <td>
+           <span>1[Pa]*exp(-i*(kx*x + ky*y))</span>
+        </td>
+        <td>
+           <span>Pa</span>
+        </td>
+        <td>
+           <span>Incident plane wave</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>p_scat</span>
+        </td>
+        <td>
+           <span>acpr.p_s</span>
+        </td>
+        <td>
+           <span>Pa</span>
+        </td>
+        <td>
+           <span>Scattered wave (water domain)</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <img src="report_files/phys_acpr.png" alt="phys_acpr.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs9226262">
+         <span>Pressure Acoustics, Frequency Domain</span>
+      </a>
+    </p>
+    <div class="TableHeading" id="cs3698064">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_1.png" alt="equ_acpr_1.png" width="164" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_2.png" alt="equ_acpr_2.png" width="63" height="14" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_3.png" alt="equ_acpr_3.png" width="76" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <h4 id="cs6227411">
+      <a name="cs4356765">
+         <span>2.3.3. Pressure Acoustics 1</span>
+      </a>
+    </h4>
+    <div class="TableHeading" id="cs4617016">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_fpam1_1.png" alt="equ_acpr_fpam1_1.png" width="166" height="39" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam1_2.png" alt="equ_acpr_fpam1_2.png" width="63" height="14" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam1_3.png" alt="equ_acpr_fpam1_3.png" width="76" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam1_4.png" alt="equ_acpr_fpam1_4.png" width="83" height="14" style="padding-left:18pt;border:none" />
+    </p>
+    <h4 id="cs1762399">
+      <a name="cs8034814">
+         <span>2.3.4. Sound Hard Boundary (Wall) 1</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/phys_acpr_shb1.png" alt="phys_acpr_shb1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs8986560">
+         <span>Sound Hard Boundary (Wall) 1</span>
+      </a>
+    </p>
+    <div class="TableHeading" id="cs8321904">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_shb1.png" alt="equ_acpr_shb1.png" width="122" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <h4 id="cs3106327">
+      <a name="cs2967047">
+         <span>2.3.5. Background Pressure Field 1</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/phys_acpr_bpf1.png" alt="phys_acpr_bpf1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs5256317">
+         <span>Background Pressure Field 1</span>
+      </a>
+    </p>
+    <div class="TableHeading" id="cs7117103">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_bpf1_1.png" alt="equ_acpr_bpf1_1.png" width="164" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_bpf1_2.png" alt="equ_acpr_bpf1_2.png" width="65" height="17" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_bpf1_3.png" alt="equ_acpr_bpf1_3.png" width="76" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <h5 id="cs7303364">
+      <a name="cs6697967">
+         <span>Background Pressure Field</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs1080988">
+           <span>Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Pressure field type</span>
+        </td>
+        <td>
+           <span>User defined</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Background pressure field</span>
+        </td>
+        <td>
+           <span>p_inc</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs4344643">
+      <a name="cs1340123">
+         <span>2.3.6. Pressure Acoustics 2</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/phys_acpr_fpam2.png" alt="phys_acpr_fpam2.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs3370355">
+         <span>Pressure Acoustics 2</span>
+      </a>
+    </p>
+    <div class="TableHeading" id="cs5113571">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_fpam2_1.png" alt="equ_acpr_fpam2_1.png" width="166" height="39" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam2_2.png" alt="equ_acpr_fpam2_2.png" width="63" height="14" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam2_3.png" alt="equ_acpr_fpam2_3.png" width="76" height="37" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_fpam2_4.png" alt="equ_acpr_fpam2_4.png" width="205" height="35" style="padding-left:18pt;border:none" />
+    </p>
+    <h5 id="cs6254649">
+      <a name="cs4002671">
+         <span>Pressure Acoustics Model</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs3603736">
+           <span>Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Fluid model</span>
+        </td>
+        <td>
+           <span>Linear elastic with attenuation</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Speed of sound</span>
+        </td>
+        <td>
+           <span>From material</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Density</span>
+        </td>
+        <td>
+           <span>From material</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Attenuation type</span>
+        </td>
+        <td>
+           <span>Attenuation coefficient, dB per unit length</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Attenuation coefficient</span>
+        </td>
+        <td>
+           <span>alpha</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs3300076">
+      <a name="cs1786296">
+         <span>2.3.7. Periodic Condition 1</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/phys_acpr_pc1.png" alt="phys_acpr_pc1.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs8802635">
+         <span>Periodic Condition 1</span>
+      </a>
+    </p>
+    <div class="TableHeading" id="cs1644281">
+       <span>Equations</span>
+    </div>
+    <p>
+      <img src="report_files/equ_acpr_pc1_1.png" alt="equ_acpr_pc1_1.png" width="136" height="21" style="padding-left:18pt;border:none" />
+    </p>
+    <p>
+      <img src="report_files/equ_acpr_pc1_2.png" alt="equ_acpr_pc1_2.png" width="315" height="38" style="padding-left:18pt;border:none" />
+    </p>
+    <h5 id="cs2738867">
+      <a name="cs9445888">
+         <span>Periodicity Settings</span>
+      </a>
+    </h5>
+    <table border="1">
+      <caption>
+        <a name="cs9834170">
+           <span>Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Type of periodicity</span>
+        </td>
+        <td>
+           <span>Floquet periodicity</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>k-vector for Floquet periodicity, x component</span>
+        </td>
+        <td>
+           <span>kx_e</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>k-vector for Floquet periodicity, y component</span>
+        </td>
+        <td>
+           <span>ky_e</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>k-vector for Floquet periodicity, z component</span>
+        </td>
+        <td>
+           <span>0</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Apply reaction terms on</span>
+        </td>
+        <td>
+           <span>Individual dependent variables</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Use weak constraints</span>
+        </td>
+        <td>
+           <span>Off</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Constraint method</span>
+        </td>
+        <td>
+           <span>Nodal</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Transform to intermediate map</span>
+        </td>
+        <td>
+           <span>Automatic</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs8271862">
+      <a name="cs9718387">
+         <span>2.4. Mesh 1</span>
+      </a>
+    </h3>
+    <table border="1">
+      <caption>
+        <a name="cs7256232">
+           <span>Mesh statistics</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Minimum element quality</span>
+        </td>
+        <td>
+           <span>0.5654</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Average element quality</span>
+        </td>
+        <td>
+           <span>0.9458</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Triangle</span>
+        </td>
+        <td>
+           <span>117525</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Quad</span>
+        </td>
+        <td>
+           <span>5760</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Edge element</span>
+        </td>
+        <td>
+           <span>2050</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Vertex element</span>
+        </td>
+        <td>
+           <span>12</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs4366166">
+      <a name="cs5210360">
+         <span>2.4.1. Size (Size)</span>
+      </a>
+    </h4>
+    <table border="1">
+      <caption>
+        <a name="cs3109330">
+           <span>Settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Calibrate for</span>
+        </td>
+        <td>
+           <span>Fluid dynamics</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Maximum element size</span>
+        </td>
+        <td>
+           <span>lambda_min/6</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Minimum element size</span>
+        </td>
+        <td>
+           <span>lambda_min/12</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Curvature factor</span>
+        </td>
+        <td>
+           <span>0.25</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Maximum element growth rate</span>
+        </td>
+        <td>
+           <span>1.08</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Predefined size</span>
+        </td>
+        <td>
+           <span>Extra fine</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Custom element size</span>
+        </td>
+        <td>
+           <span>Custom</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs1024148">
+      <a name="cs1000982">
+         <span>2.4.2. Free Triangular 2 (Ftri2)</span>
+      </a>
+    </h4>
+    <table border="1">
+      <caption>
+        <a name="cs1812347">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Selection</span>
+        </td>
+        <td>
+           <span>Domains 2–4</span>
+        </td>
+      </tr>
+    </table>
+    <h4 id="cs6552051">
+      <a name="cs2873932">
+         <span>2.4.3. Mapped 1 (Map1)</span>
+      </a>
+    </h4>
+    <table border="1">
+      <caption>
+        <a name="cs5973739">
+           <span>Selection</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Geometric entity level</span>
+        </td>
+        <td>
+           <span>Domain</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Selection</span>
+        </td>
+        <td>
+           <span>Domains 1, 5</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      <a name="cs1307782">
+         <span>Mesh quality near interface</span>
+      </a>
+    </p>
+    <p>
+      <img src="report_files/pg_pg23.png" alt="pg_pg23.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs3925719">
+         <span>Mesh Line: interface(x)</span>
+      </a>
+    </p>
+    <p>
+      <a name="cs2631271">
+         <span>Mesh quality near PML</span>
+      </a>
+    </p>
+    <p>
+      <img src="report_files/pg_pg22.png" alt="pg_pg22.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs8019075">
+         <span>Mesh Line: interface(x)</span>
+      </a>
+    </p>
+    <h2 id="cs3849128">
+      <a name="cs6991620">
+         <span>3. Generate Library</span>
+      </a>
+    </h2>
+    <table border="1">
+      <caption>
+        <a name="cs2640537">
+           <span>Computation information</span>
+        </a>
+      </caption>
+      <tr>
+        <td>
+           <span>Computation time</span>
+        </td>
+        <td>
+           <span>2 min 50 s</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>CPU</span>
+        </td>
+        <td>
+           <span>Intel(R) Core(TM) i7-5650U CPU @ 2.20GHz, 2 cores</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Operating system</span>
+        </td>
+        <td>
+           <span>Mac OS X</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs8337419">
+      <a name="cs5601379">
+         <span>3.1. Parametric Sweep</span>
+      </a>
+    </h3>
+    <table border="1">
+      <tr>
+        <th>
+           <span>Parameter name</span>
+        </th>
+        <th>
+           <span>Parameter value list</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>c_delta</span>
+        </td>
+        <td>
+           <span>.9, .95, 1.05, 1.1</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs2336066">
+           <span>Study settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Sweep type</span>
+        </td>
+        <td>
+           <span>Specified combinations</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Parameter name</span>
+        </td>
+        <td>
+           <span>c_delta</span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+           <span>Unit</span>
+        </td>
+        <td>
+           <span></span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs7835476">
+           <span>Parameters</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Parameter name</span>
+        </th>
+        <th>
+           <span>Parameter value list</span>
+        </th>
+        <th>
+           <span>Parameter unit</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>c_delta (Sound speed multiplier)</span>
+        </td>
+        <td>
+           <span>.9, .95, 1.05, 1.1</span>
+        </td>
+        <td>
+           <span></span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs2661619">
+      <a name="cs3091151">
+         <span>3.2. Material Sweep</span>
+      </a>
+    </h3>
+    <table border="1">
+      <caption>
+        <a name="cs6948705">
+           <span>Study settings</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Switch</span>
+        </th>
+        <th>
+           <span>Cases</span>
+        </th>
+        <th>
+           <span>Case numbers</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Top layer (sw1)</span>
+        </td>
+        <td>
+           <span>User defined</span>
+        </td>
+        <td>
+           <span>1,4</span>
+        </td>
+      </tr>
+    </table>
+    <h3 id="cs7927087">
+      <a name="cs8390177">
+         <span>3.3. Frequency Domain</span>
+      </a>
+    </h3>
+    <table border="1">
+      <tr>
+        <th>
+           <span>Frequencies (Hz)</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>f0</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs3931411">
+           <span>Physics selection</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Description</span>
+        </th>
+        <th>
+           <span>Value</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Modify model configuration for study step</span>
+        </td>
+        <td>
+           <span>On</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs4916608">
+           <span>Physics and variables selection</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Physics interface</span>
+        </th>
+        <th>
+           <span>Discretization</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Pressure Acoustics, Frequency Domain (acpr)</span>
+        </td>
+        <td>
+           <span>physics</span>
+        </td>
+      </tr>
+    </table>
+    <table border="1">
+      <caption>
+        <a name="cs4976961">
+           <span>Mesh selection</span>
+        </a>
+      </caption>
+      <tr>
+        <th>
+           <span>Geometry</span>
+        </th>
+        <th>
+           <span>Mesh</span>
+        </th>
+      </tr>
+      <tr>
+        <td>
+           <span>Geometry 1 (geom1)</span>
+        </td>
+        <td>
+           <span>mesh1</span>
+        </td>
+      </tr>
+    </table>
+    <h2 id="cs2854818">
+      <a name="cs3990422">
+         <span>4. Results</span>
+      </a>
+    </h2>
+    <h3 id="cs5890379">
+      <a name="cs8621717">
+         <span>4.1. Plot Groups</span>
+      </a>
+    </h3>
+    <h4 id="cs6317439">
+      <a name="cs9375056">
+         <span>4.1.1. Acoustic Pressure (Acpr)</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/pg_pg3.png" alt="pg_pg3.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs7909325">
+         <span>c_delta=0.9, Top layer=Gravel Surface: Total acoustic pressure field (Pa)</span>
+      </a>
+    </p>
+    <h4 id="cs7757732">
+      <a name="cs8872386">
+         <span>4.1.2. Sound Pressure Level (Acpr)</span>
+      </a>
+    </h4>
+    <p>
+      <img src="report_files/pg_pg20.png" alt="pg_pg20.png" width="480" height="360" />
+    </p>
+    <p style="font-style:italic">
+      <a name="cs3757694">
+         <span>c_delta=0.9, Top layer=Gravel Surface: Sound pressure level (dB)</span>
+      </a>
+    </p>
+  </body>
+</html>

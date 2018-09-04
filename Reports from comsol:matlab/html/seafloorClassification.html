@@ -1,0 +1,344 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>NN Classification with Helmholtz Simulation Data</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-08-27"><meta name="DC.source" content="seafloorClassification.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>NN Classification with Helmholtz Simulation Data</h1><!--introduction--><p>This script runs the MATLAB Neural Net Pattern Classification tool using acoustic simulations of various seafloors. The parameters describing the seafloors include the sound speed, density and layer thickness.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Data set 1</a></li><li><a href="#2">Perform NN pattern recognition with material classes</a></li><li><a href="#3">Data set 2</a></li><li><a href="#4">Perform NN pattern recognition with material classes</a></li><li><a href="#5">Perform NN pattern recognition with thickness classes</a></li><li><a href="#6">Perform NN pattern recognition with thickness classes, fixed material</a></li><li><a href="#7">Perform NN pattern recognition with material classes, fixed thickness</a></li><li><a href="#8">Other approaches: clustering</a></li><li><a href="#9">K means clustering</a></li></ul></div><h2 id="1">Data set 1</h2><p>In this example we only consider a one-layer seafloor with four varying material types.</p><p>parameterNames :  list of strings describing the columns of the "parameter" variable parameters     :  matrix where the rows correspond to the observation number and the                    columns are entries corresponding to the parameterName signal         :  each row is a new observation of observation data taken                   on a spatial domain sampled at 1024 points</p><pre class="codeinput">load(<span class="string">'oneLayerSeabed_N=400'</span>);
+</pre><h2 id="2">Perform NN pattern recognition with material classes</h2><pre class="codeinput">[x,t] =selectData(signal, parameters, <span class="string">'all'</span>, <span class="string">'material'</span>);
+net = patternnet(3); net = train(net,x,t); <span class="comment">%view(net)</span>
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf(<span class="string">'Confusion: all obs target=material'</span>,j))
+figure;plotroc(t,y);title(sprintf(<span class="string">'ROC: all obs target=material'</span>,j))
+</pre><img vspace="5" hspace="5" src="seafloorClassification_01.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_02.png" alt=""> <h2 id="3">Data set 2</h2><p>There is a two-layer seafloor. The thickness and material type in the top layer is varying and the bottom material Basalt has fixed parameters [c = 5250 rho = 2700]</p><pre class="codeinput">load <span class="string">twoLayerSeabed_N=8000.mat</span>
+</pre><h2 id="4">Perform NN pattern recognition with material classes</h2><pre class="codeinput">[x,t] =selectData(signal, parameters, <span class="string">'all'</span>, <span class="string">'material'</span>);
+net = patternnet(3); net = train(net,x,t); <span class="comment">%view(net)</span>
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf(<span class="string">'Confusion: all obs target=material'</span>,j))
+figure;plotroc(t,y);title(sprintf(<span class="string">'ROC: all obs target=material'</span>,j))
+</pre><img vspace="5" hspace="5" src="seafloorClassification_03.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_04.png" alt=""> <h2 id="5">Perform NN pattern recognition with thickness classes</h2><pre class="codeinput">[x,t] =selectData(signal, parameters, <span class="string">'all'</span>, <span class="string">'thickness'</span>);
+net = patternnet(3);
+net = train(net,x,t); <span class="comment">%view(net)</span>
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf(<span class="string">'Confusion: all obs target=thickness'</span>,j))
+figure; plotroc(t,y);title(sprintf(<span class="string">'ROC: all obs target=thickness'</span>,j))
+</pre><img vspace="5" hspace="5" src="seafloorClassification_05.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_06.png" alt=""> <h2 id="6">Perform NN pattern recognition with thickness classes, fixed material</h2><pre class="codeinput"><span class="keyword">for</span> j=1:4
+[x,t] =selectData(signal, parameters, sprintf(<span class="string">'mat%d'</span>,j), <span class="string">'thickness'</span>);
+net = patternnet(3);
+net = train(net,x,t); <span class="comment">%view(net)</span>
+y = net(x); classes = vec2ind(y);
+figure;
+plotconfusion(t,y);
+title(sprintf(<span class="string">'Confusion: mat%d target=thickness'</span>,j))
+figure;
+plotroc(t,y);
+title(sprintf(<span class="string">'ROC: mat%d target=thickness'</span>,j))
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="seafloorClassification_07.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_08.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_09.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_10.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_11.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_12.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_13.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_14.png" alt=""> <h2 id="7">Perform NN pattern recognition with material classes, fixed thickness</h2><pre class="codeinput"><span class="keyword">for</span> j=1:4
+[x,t] =selectData(signal, parameters, sprintf(<span class="string">'thc%d'</span>,j), <span class="string">'material'</span>);
+net = patternnet(3);
+net = train(net,x,t); <span class="comment">%view(net)</span>
+y = net(x); classes = vec2ind(y);
+figure;
+plotconfusion(t,y);
+title(sprintf(<span class="string">'Confusion: mat%d target=thickness'</span>,j))
+figure;
+plotroc(t,y);
+title(sprintf(<span class="string">'ROC: mat%d target=thickness'</span>,j))
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="seafloorClassification_15.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_16.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_17.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_18.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_19.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_20.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_21.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_22.png" alt=""> <h2 id="8">Other approaches: clustering</h2><pre class="codeinput"><span class="comment">% Extract the mean and standard deviation of each observation</span>
+obs=signal;
+[l w] = size(obs);
+obs2=zeros(l,2);
+<span class="keyword">for</span> j=1:length(obs);
+    obs2(j,1)=mean(obs(j,:));
+    obs2(j,2)=std(obs(j,:));
+<span class="keyword">end</span>
+
+<span class="comment">% plot the different material classes</span>
+figure; hold <span class="string">all</span>;
+<span class="keyword">for</span> j=1:4
+ind=j:4:l;
+h=scatter(obs2(ind,1),obs2(ind,2));
+<span class="keyword">end</span>
+xlabel(<span class="string">'mean'</span>); ylabel(<span class="string">'stddev'</span>);
+legend(<span class="string">'Clay: (c = 1500, rho = 1500)'</span>,<span class="string">'Silt: (c = 1575, rho = 1700)'</span>,<span class="string">'Sand: (c = 1650, rho = 1900)'</span>,<span class="string">'Gravel: (c = 1800, rho = 2000)'</span>);
+title(<span class="string">'True material classes'</span>)
+
+<span class="comment">% plot the different thickness classes</span>
+figure; hold <span class="string">all</span>;
+colormap <span class="string">winter</span>;
+thc_list=unique(parameters(:,4));
+<span class="keyword">for</span> j=1:4
+ind=find(parameters(:, 4) == thc_list(j));
+h=scatter(obs2(ind,1),obs2(ind,2),<span class="string">'.'</span>);
+<span class="keyword">end</span>
+xlabel(<span class="string">'mean'</span>); ylabel(<span class="string">'stddev'</span>);
+legend(<span class="string">'thc = .25'</span>,<span class="string">'thc = .5'</span>,<span class="string">'thc = .75'</span>,<span class="string">'thc = 1'</span>);
+title(<span class="string">'True thickness classes'</span>)
+</pre><img vspace="5" hspace="5" src="seafloorClassification_23.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_24.png" alt=""> <h2 id="9">K means clustering</h2><pre class="codeinput">rng(1);
+idx=kmeans(obs2,4);
+<span class="comment">%</span>
+figure;
+hold <span class="string">all</span>;
+<span class="keyword">for</span> j= [1 3 2 4 ]
+    ind=idx==j;
+    scatter(obs2(ind,1),obs2(ind,2),<span class="string">'x'</span>);
+<span class="keyword">end</span>
+title(<span class="string">'k-means classes'</span>)
+legend(<span class="string">'Clay: (c = 1500, rho = 1500)'</span>,<span class="string">'Silt: (c = 1575, rho = 1700)'</span>,<span class="string">'Sand: (c = 1650, rho = 1900)'</span>,<span class="string">'Gravel: (c = 1800, rho = 2000)'</span>);
+
+xlabel(<span class="string">'mean'</span>); ylabel(<span class="string">'stddev'</span>);
+
+<span class="comment">% k means clustering error</span>
+
+true_ind = repmat(1:4, 1, length(obs2)/4)';
+figure;
+hold <span class="string">all</span>;
+ind_k = [1 3 2 4 ];
+err1=0*obs2;
+
+<span class="keyword">for</span> j=1:4
+    ind = j:4:length(obs2);
+    <span class="keyword">for</span> k=1:length(ind)
+   <span class="keyword">if</span> idx(ind(k)) ~= ind_k(j)
+        err1(ind(k),:) = obs2(ind(k),:);
+   <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    scatter(err1(ind,1), err1(ind,2));
+<span class="keyword">end</span>
+
+
+
+title(<span class="string">'error k-means classes'</span>)
+xlabel(<span class="string">'mean'</span>); ylabel(<span class="string">'stddev'</span>);
+legend(<span class="string">'Clay: (c = 1500, rho = 1500)'</span>,<span class="string">'Silt: (c = 1575, rho = 1700)'</span>,<span class="string">'Sand: (c = 1650, rho = 1900)'</span>,<span class="string">'Gravel: (c = 1800, rho = 2000)'</span>);
+</pre><img vspace="5" hspace="5" src="seafloorClassification_25.png" alt=""> <img vspace="5" hspace="5" src="seafloorClassification_26.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% NN Classification with Helmholtz Simulation Data
+% This script runs the MATLAB Neural Net Pattern Classification tool using
+% acoustic simulations of various seafloors. The parameters describing the
+% seafloors include the sound speed, density and layer thickness.
+
+
+%% Data set 1
+% In this example we only consider a one-layer seafloor with four varying
+% material types.
+%
+% parameterNames :  list of strings describing the columns of the "parameter" variable
+% parameters     :  matrix where the rows correspond to the observation number and the 
+%                    columns are entries corresponding to the parameterName
+% signal         :  each row is a new observation of observation data taken
+%                   on a spatial domain sampled at 1024 points
+%
+
+load('oneLayerSeabed_N=400');
+
+
+
+%% Perform NN pattern recognition with material classes
+% 
+
+[x,t] =selectData(signal, parameters, 'all', 'material');
+net = patternnet(3); net = train(net,x,t); %view(net) 
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf('Confusion: all obs target=material',j))
+figure;plotroc(t,y);title(sprintf('ROC: all obs target=material',j))
+
+%% Data set 2
+% There is a two-layer seafloor. The thickness and material type in the top layer is
+% varying and the bottom material Basalt has fixed parameters [c = 5250 rho = 2700] 
+
+load twoLayerSeabed_N=8000.mat
+
+
+
+%% Perform NN pattern recognition with material classes
+
+[x,t] =selectData(signal, parameters, 'all', 'material');
+net = patternnet(3); net = train(net,x,t); %view(net) 
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf('Confusion: all obs target=material',j))
+figure;plotroc(t,y);title(sprintf('ROC: all obs target=material',j))
+
+
+
+
+%% Perform NN pattern recognition with thickness classes
+
+[x,t] =selectData(signal, parameters, 'all', 'thickness');
+net = patternnet(3);
+net = train(net,x,t); %view(net)
+y = net(x); classes = vec2ind(y);
+figure; plotconfusion(t,y);title(sprintf('Confusion: all obs target=thickness',j))
+figure; plotroc(t,y);title(sprintf('ROC: all obs target=thickness',j))
+
+
+
+%% Perform NN pattern recognition with thickness classes, fixed material
+for j=1:4
+[x,t] =selectData(signal, parameters, sprintf('mat%d',j), 'thickness');
+net = patternnet(3);
+net = train(net,x,t); %view(net)
+y = net(x); classes = vec2ind(y);
+figure;
+plotconfusion(t,y);
+title(sprintf('Confusion: mat%d target=thickness',j))
+figure;
+plotroc(t,y);
+title(sprintf('ROC: mat%d target=thickness',j))
+end
+
+%% Perform NN pattern recognition with material classes, fixed thickness
+for j=1:4
+[x,t] =selectData(signal, parameters, sprintf('thc%d',j), 'material');
+net = patternnet(3);
+net = train(net,x,t); %view(net)
+y = net(x); classes = vec2ind(y);
+figure;
+plotconfusion(t,y);
+title(sprintf('Confusion: mat%d target=thickness',j))
+figure;
+plotroc(t,y);
+title(sprintf('ROC: mat%d target=thickness',j))
+end
+
+
+%% Other approaches: clustering
+
+% Extract the mean and standard deviation of each observation
+obs=signal;
+[l w] = size(obs);
+obs2=zeros(l,2);
+for j=1:length(obs);
+    obs2(j,1)=mean(obs(j,:));
+    obs2(j,2)=std(obs(j,:));   
+end
+
+% plot the different material classes
+figure; hold all;
+for j=1:4 
+ind=j:4:l;
+h=scatter(obs2(ind,1),obs2(ind,2)); 
+end
+xlabel('mean'); ylabel('stddev');
+legend('Clay: (c = 1500, rho = 1500)','Silt: (c = 1575, rho = 1700)','Sand: (c = 1650, rho = 1900)','Gravel: (c = 1800, rho = 2000)');
+title('True material classes')
+
+% plot the different thickness classes
+figure; hold all;
+colormap winter;
+thc_list=unique(parameters(:,4));
+for j=1:4 
+ind=find(parameters(:, 4) == thc_list(j));
+h=scatter(obs2(ind,1),obs2(ind,2),'.'); 
+end
+xlabel('mean'); ylabel('stddev');
+legend('thc = .25','thc = .5','thc = .75','thc = 1');
+title('True thickness classes')
+
+%% K means clustering
+rng(1);
+idx=kmeans(obs2,4);
+%
+figure;
+hold all;
+for j= [1 3 2 4 ]
+    ind=idx==j;
+    scatter(obs2(ind,1),obs2(ind,2),'x');
+end
+title('k-means classes')
+legend('Clay: (c = 1500, rho = 1500)','Silt: (c = 1575, rho = 1700)','Sand: (c = 1650, rho = 1900)','Gravel: (c = 1800, rho = 2000)');
+
+xlabel('mean'); ylabel('stddev');
+
+% k means clustering error
+
+true_ind = repmat(1:4, 1, length(obs2)/4)';
+figure;
+hold all;
+ind_k = [1 3 2 4 ];
+err1=0*obs2;
+
+for j=1:4
+    ind = j:4:length(obs2);
+    for k=1:length(ind)
+   if idx(ind(k)) ~= ind_k(j)
+        err1(ind(k),:) = obs2(ind(k),:);
+   end
+    end
+    scatter(err1(ind,1), err1(ind,2));
+end
+  
+    
+
+title('error k-means classes')
+xlabel('mean'); ylabel('stddev');
+legend('Clay: (c = 1500, rho = 1500)','Silt: (c = 1575, rho = 1700)','Sand: (c = 1650, rho = 1900)','Gravel: (c = 1800, rho = 2000)');
+
+
+
+##### SOURCE END #####
+--></body></html>
